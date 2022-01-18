@@ -1,0 +1,16 @@
+import customerReducer from "./../features/customerSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import reservationReducer from "../features/reservationSlice";
+
+export const store = configureStore({
+  reducer: {
+    // slices
+    reservations: reservationReducer,
+    customers: customerReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export default store;
