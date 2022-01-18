@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addFoodForCustomer } from "../features/customerSlice";
 
 interface CustomerProps {
   id: string;
@@ -7,7 +9,20 @@ interface CustomerProps {
 }
 
 function CustomerCard({ id, name, food }: CustomerProps) {
-  console.log(name);
+  const dispatch = useDispatch();
+  const [customerFoodInput, setCustomerFoodInput] = useState("");
+
+  const handleAddFood = () => {
+    dispatch(
+      addFoodForCustomer({
+        id,
+        food: customerFoodInput,
+      })
+    );
+
+    setCustomerFoodInput("");
+  };
+
   return (
     <div className="customer-food-card-container">
       <p>{name}</p>
@@ -18,8 +33,11 @@ function CustomerCard({ id, name, food }: CustomerProps) {
           })}
         </div>
         <div className="customer-food-input-container">
-          <input />
-          <button>Add</button>
+          <input
+            value={customerFoodInput}
+            onChange={(e) => setCustomerFoodInput(e.target.value)}
+          />
+          <button onClick={handleAddFood}>Add</button>
         </div>
       </div>
     </div>
